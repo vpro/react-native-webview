@@ -52,7 +52,8 @@ static NSString *const kPostMessageHost = @"postMessage";
   return self;
 }
 
-- (void)setHideContextMenu:(BOOL)hideContextMenu {
+- (void)setHideContextMenu:(BOOL)hideContextMenu
+{
   if (hideContextMenu) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidShow) name:UIMenuControllerDidShowMenuNotification object:nil];
   }
@@ -79,7 +80,8 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   [_webView goBack];
 }
 
--(void)menuDidShow {
+-(void)menuDidShow
+{
   [UIMenuController.sharedMenuController setMenuVisible:NO animated:NO];
 }
 
