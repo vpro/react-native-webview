@@ -27,6 +27,7 @@ static NSString *const kPostMessageHost = @"postMessage";
 {
   UIWebView *_webView;
   NSString *_injectedJavaScript;
+  BOOL _hideContextMenu;
 }
 
 - (void)dealloc
@@ -54,9 +55,14 @@ static NSString *const kPostMessageHost = @"postMessage";
 
 - (void)setHideContextMenu:(BOOL)hideContextMenu
 {
-  if (hideContextMenu) {
+  _hideContextMenu = hideContextMenu;
+  if (_hideContextMenu) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidShow) name:UIMenuControllerDidShowMenuNotification object:nil];
   }
+}
+-(BOOL)hideContextMenu
+{
+    return _hideContextMenu;
 }
 
 RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
