@@ -25,12 +25,16 @@ shouldStartLoadForRequest:(NSMutableDictionary<NSString *, id> *)request
 @property (nonatomic, copy) NSDictionary *source;
 @property (nonatomic, assign) UIEdgeInsets contentInset;
 @property (nonatomic, assign) BOOL automaticallyAdjustContentInsets;
+@property (nonatomic, assign) BOOL hideContextMenu;
 @property (nonatomic, assign) BOOL messagingEnabled;
 @property (nonatomic, copy) NSString *injectedJavaScript;
 @property (nonatomic, assign) BOOL scalesPageToFit;
 
+- (BOOL)canBecomeFirstResponder;
+- (BOOL)canPerformAction;
 - (void)goForward;
 - (void)goBack;
+- (void)menuDidShow;
 - (void)reload;
 - (void)stopLoading;
 - (void)postMessage:(NSString *)message;

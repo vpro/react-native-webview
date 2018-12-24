@@ -32,6 +32,7 @@ static NSString *const kPostMessageHost = @"postMessage";
 - (void)dealloc
 {
   _webView.delegate = nil;
+  _webView.uiDelegate = nil;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -42,6 +43,7 @@ static NSString *const kPostMessageHost = @"postMessage";
     _contentInset = UIEdgeInsetsZero;
     _webView = [[UIWebView alloc] initWithFrame:self.bounds];
     _webView.delegate = self;
+    _webView.uiDelegate = self;
 #if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && __IPHONE_OS_VERSION_MAX_ALLOWED >= 110000 /* __IPHONE_11_0 */
     if ([_webView.scrollView respondsToSelector:@selector(setContentInsetAdjustmentBehavior:)]) {
       _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -52,7 +54,22 @@ static NSString *const kPostMessageHost = @"postMessage";
   return self;
 }
 
+- (void)setHideContextMenu:(BOOL)hideContextMenu {
+  if (hideContextMenu) {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidShow) name:UIMenuControllerDidShowMenuNotification object:nil];
+  }
+}
+
 RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
+
+- (BOOL)canBecomeFirstResponder {
+  return YES;
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    return NO;
+}
 
 - (void)goForward
 {
@@ -62,6 +79,10 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 - (void)goBack
 {
   [_webView goBack];
+}
+
+-(void)menuDidShow {
+  [UIMenuController.sharedMenuController setMenuVisible:NO animated:NO];
 }
 
 - (void)reload
