@@ -166,6 +166,12 @@ export type IOSWebViewProps = $ReadOnly<{|
    */
   decelerationRate?: ?('fast' | 'normal' | number),
 
+    /**
+     * If true context menu will be hidden for text selection
+     * @platform ios
+     */
+    hideContextMenu?: ?boolean,
+
   /**
    * Boolean value that determines whether scrolling is enabled in the
    * `WebView`. The default value is `true`.
